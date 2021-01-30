@@ -100,38 +100,75 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button onclick="successNotification('booking-area','booking-Information')" id="book-now-button"
+                class="btn-style">Book Now</button>
         </div>
 
-        <div class="booking-content">
+        <div id="booking-area" class="booking-content">
             <h1>discover <br> around the world</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias
                 veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise
                 voluptatibus quam</p>
         </div>
+
+        <div id="booking-Information">
+            <h3>Flight Booking successful</h3>
+            <table id="ticket-summery">
+                <tr>
+                    <th>Category</th>
+                    <th>Tickets</th>
+                    <th>Rate</th>
+                    <th>Tax</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <td>First Class</td>
+                    <td id="first-class-demand">0</td>
+                    <td>$150</td>
+                    <td>10%</td>
+                    <td id="first-class-total">$0</td>
+                </tr>
+                <tr>
+                    <td>Economy</td>
+                    <td id="economy-demand">0</td>
+                    <td>$100</td>
+                    <td>10%</td>
+                    <td id="economy-total">$0</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Total Amount </td>
+                    <td id="success-total">$0</td>
+                </tr>
+            </table>
+            <button onclick="successNotification('booking-Information', 'booking-area')"
+                id="success-close-button">Close</button>
+        </div>
         </section>
         <!--Thank You-->
 
         <script>
-            function handleTicketCount(ticket, increment) {
-                const ticketInput = document.getElementById(ticket + '-ticket-count');
-                const ticketCount = parseInt(ticketInput.value);
-                var  ticketNewCount = ticketCount;
-                if (increment == false && ticketNewCount > 0){
+
+            //Function to handel the increment and decrement of ticket number 
+            function handleTicketCount(ticketType, increment) {
+                const ticketCount = getTicketNumber(ticketType);
+                console.log(ticketCount);
+                var ticketNewCount = ticketCount;
+                if (increment == false && ticketNewCount > 0) {
                     ticketNewCount = ticketNewCount - 1;
                 }
-                else if(increment == true){
+                else if (increment == true) {
                     ticketNewCount = ticketNewCount + 1;
                 }
-                ticketInput.value = ticketNewCount;
+                document.getElementById(ticketType + '-ticket-count').value = ticketNewCount;
                 totalAmountCalculation();
+                successNotification('booking-Information', 'booking-area');
             }
 
-            function totalAmountCalculation(){
-                const firstClassInput = document.getElementById('first-class-ticket-count').value;
-                const firstClassTicket = parseInt(firstClassInput);
-                const economicInput = document.getElementById('economy-ticket-count').value;
-                const economicTicket = parseInt(economicInput);
+
+            //Function to calculate subtotal, tax & grand total amount 
+            function totalAmountCalculation() {
+                const firstClassTicket = getTicketNumber('first-class');
+                const economicTicket = getTicketNumber('economy');
                 const subTotal = firstClassTicket * 150 + economicTicket * 100;
                 document.getElementById('sub-total').innerText = '$' + subTotal;
                 const tax = subTotal * 0.10;
@@ -139,6 +176,49 @@
                 const grandTotal = subTotal + tax;
                 document.getElementById('total').innerText = '$' + grandTotal;
             }
+
+
+            // Return number of tickets by category 
+            function getTicketNumber(ticketType) {
+                const inputValue = document.getElementById(ticketType + '-ticket-count').value;
+                const Ticket = parseInt(inputValue);
+                return Ticket;
+            }
+
+
+            //Function to shoe reservation successful notification after pressing Book Now button
+            function successNotification(block, show) {
+                document.getElementById(block).style.display = "none";
+                document.getElementById(show).style.display = "block";
+                successTotal();
+
+            }
+
+
+            //Function to shoe reservation successful calculation
+            function successTotal() {
+                const successTotal = document.getElementById('total').innerText;
+                if (successTotal == 0) {
+ 
+                }
+                else {
+                    document.getElementById('success-total').innerText = successTotal;
+
+                    const firstClassDemand = document.getElementById('first-class-ticket-count').value;
+                    document.getElementById('first-class-demand').innerText = firstClassDemand;
+                    const firstClassTotal = firstClassDemand * 150 + firstClassDemand * 150 * 0.1;
+                    document.getElementById('first-class-total').innerText = firstClassTotal;
+
+                    const economyDemand = document.getElementById('economy-ticket-count').value;
+                    document.getElementById('economy-demand').innerText = economyDemand;
+                    const economyTotal = economyDemand * 100 + economyDemand * 100 * 0.1;
+                    document.getElementById('economy-total').innerText = economyTotal;
+                }
+
+
+            }
+
+
         </script>
 </body>
 

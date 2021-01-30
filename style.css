@@ -21,6 +21,38 @@ button{
     border: 1px solid #3352F2;
     border-radius: 4px;
 }
+#booking-Information{
+    display: none;
+    width: 500px;
+    height: 350px;
+    margin: auto;
+    border-radius: 5px;
+    padding: 30px 25px 25px 25px;
+    background-color: #F3F5FF;
+}
+#booking-Information h3{
+    text-align: center;
+    margin-bottom: 30px;
+}
+#success-close-button{
+    position: relative;
+    top: 35px;
+    left: 360px;
+    padding: 8px 25px;
+    background-color: #3352F2;
+    color: #F3F5FF;
+}
+#ticket-summery{
+    border: 1px solid #3352F2;
+    border-collapse: collapse;
+    margin: auto;
+}
+#ticket-summery td, th{
+    padding: 10px 20px;
+    border: 1px solid #3352F2;
+    border-collapse: collapse;
+    text-align: center;
+}
 
 nav{
     height: 50px;
